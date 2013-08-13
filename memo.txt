@@ -1,0 +1,17 @@
+boostのメモリ管理をマスター
+	http://www.kmonos.net/alang/boost/smartptr.html
+
+Mac,iOS,Androidで同時コンパイル
+
+collada 1.4 1.5 どちらが主流かリサーチ
+
+collada ライセンス
+
+.dae サンプルファイル
+
+---開発手法--------------------------------------------------------
+util用
+renderer用、ジオメトリ
+モデル用
+Script
+のブランチを分けて作業する。なるべく疎結合に。
