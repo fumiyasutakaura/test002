@@ -11,6 +11,7 @@
 #include <iostream>
 #include <math.h>
 
+using namespace TZulu;
 
 TZVector3D::TZVector3D()
 {

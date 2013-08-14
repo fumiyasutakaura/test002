@@ -12,6 +12,9 @@
 #include <iostream>
 #include <math.h>
 
+
+using namespace TZulu;
+
 static float degree2radian(const float degree)
 {
     static const float factor  = 0.00555f * M_PI;
@@ -366,7 +369,7 @@ void TZMatrix::axisRotate( const float angle_degree, TZVector3D &axis )
 	float half_radian = degree2radian(angle_degree * 0.5);
 	TZQuaternion q( cos(half_radian), axis.unitTZVector3D() * sin(half_radian) );
 
-	*this *= q.toTZMatrix();
+	*this *= q.toMatrix();
 }
 
 
@@ -382,8 +385,8 @@ TZMatrix TZMatrix::Translate( TZVector3D positionVec ) {
 TZMatrix TZMatrix::AxisRotate( const float angle_degree, TZVector3D axis ) {
     TZMatrix ret;
 	float half_radian = degree2radian(angle_degree * 0.5);
-	TZQuaternion q( cos(half_radian), axis.unitTZVector3D() * sin(half_radian) );
-	ret *= q.toTZMatrix();
+	TZQuaternion q( cos(half_radian), axis.unitVector3D() * sin(half_radian) );
+	ret *= q.toMatrix();
     return ret;
 }
 

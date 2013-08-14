@@ -11,6 +11,8 @@
 #include <iostream>
 #include <math.h>
 
+using namespace TZulu;
+
 
 static float degree2radian(const float degree)
 {
@@ -246,7 +248,7 @@ void TZQuaternion::axisRotate( const float angle_degree, TZVector3D &axis )
 }
 
 
-TZMatrix TZQuaternion::toTZMatrix()
+TZMatrix TZQuaternion::toMatrix()
 {
 	TZMatrix retMatrix;
 	
@@ -273,7 +275,7 @@ TZMatrix TZQuaternion::toTZMatrix()
 	return retMatrix;
 }
 
-TZMatrix TZQuaternion::toRotationTZMatrix()
+TZMatrix TZQuaternion::toRotationMatrix()
 {
 	TZMatrix retMatrix;
 	

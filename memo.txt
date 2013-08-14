@@ -1,3 +1,5 @@
+collada 公式サイトから情報収集
+
 boostのメモリ管理をマスター
 	http://www.kmonos.net/alang/boost/smartptr.html
 
@@ -15,3 +17,23 @@ renderer用、ジオメトリ
 モデル用
 Script
 のブランチを分けて作業する。なるべく疎結合に。
+
+------------------------------------------------------------
+8/8
+	collada dae sample file
+8/9
+	leann Unity 
+	renderer
+10
+	leann Unity
+	model
+11
+	leann Unity
+	math
+12
+	leann Unity
+	script
+13
+	leann Unity
+	tron
+-------------------------------------------------------------
