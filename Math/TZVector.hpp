@@ -25,6 +25,7 @@ namespace TZulu {
         };
         TZVector2D() { x=0.0f; y=0.0f; }
         TZVector2D( const float arg_x, const float arg_y ) { x=arg_x; y=arg_y; }
+        TZVector2D( const TZVector2D& v ) { x=v.x; y=v.y; }
     };
     class TZVector4D {
     public:
@@ -38,6 +39,7 @@ namespace TZulu {
         TZVector4D( const float arg_x, const float arg_y, const float arg_z, const float arg_w ) {
             x=arg_x; y=arg_y; z=arg_z; w=arg_w;
         }
+        TZVector4D( const TZVector4D& v ) { x=v.x; y=v.y; z=v.z; w=v.w; }
     };
     
     class TZVector3D
@@ -53,9 +55,8 @@ namespace TZulu {
         
         TZVector3D();
         TZVector3D( const float arg_x, const float arg_y , const float arg_z );
+        TZVector3D( const TZVector3D& v );
         ~TZVector3D();
-        
-        void printTZVector3D();
         
         void operator=( const TZVector3D &vector3D );
         TZVector3D operator+( const TZVector3D &vector3D ) const;
@@ -64,15 +65,12 @@ namespace TZulu {
         void operator-=( const TZVector3D &vector3D );
         TZVector3D operator*( const float scale ) const;
         TZVector3D operator/( const float denominator ) const;
-        bool operator==( const TZVector3D &vector3D ) const;
         float& operator[](int index);
         
-        void print( std::string tag );
+        void print( std::string tag = "" ) const;
         
-        float vectorLength();
-        TZVector3D unitTZVector3D();
-        void makeUnit();
-        
+        TZVector3D unit() const;
+        float length() const;
         float dot( const TZVector3D &vector3D ) const;
         TZVector3D cross( const TZVector3D &vector3D ) const;
         

@@ -1,5 +1,5 @@
 /*
- *  matrix.cpp
+ * matrix.cpp
  *  Ninteru3DMacOSX
  *
  *  Created by Fumiyasu Takaura on 1/16/11.
@@ -9,7 +9,6 @@
 
 #include "TZMatrix.hpp"
 #include "TZQuaternion.hpp"
-#include <iostream>
 #include <math.h>
 
 
@@ -29,38 +28,38 @@ static float radian2degree(const float radian)
 
 TZMatrix::TZMatrix()
 {
-	this->m[0] = 1;	this->m[1] = 0;	this->m[2] = 0;	this->m[3] = 0;
-	this->m[4] = 0; this->m[5] = 1;	this->m[6] = 0;	this->m[7] = 0;
-	this->m[8] = 0;	this->m[9] = 0;	this->m[10] = 1; this->m[11] = 0;
-	this->m[12] = 0; this->m[13] = 0; this->m[14] = 0; this->m[15] = 1;
+    m[0]  = 1.0f; m[1]  = 0.0f; m[2]  = 0.0f; m[3]  = 0.0f;
+    m[4]  = 0.0f; m[5]  = 1.0f; m[6]  = 0.0f; m[7]  = 0.0f;
+    m[8]  = 0.0f; m[9]  = 0.0f; m[10] = 1.0f; m[11] = 0.0f;
+    m[12] = 0.0f; m[13] = 0.0f; m[14] = 0.0f; m[15] = 1.0f;
 }
 
 TZMatrix::TZMatrix(const float a[16])
 {
-	this->m[0] = a[0]; this->m[1] = a[1]; this->m[2] = a[2]; this->m[3] = a[3];
-	this->m[4] = a[4]; this->m[5] = a[5]; this->m[6] = a[6]; this->m[7] = a[7];	
-	this->m[8] = a[8]; this->m[9] = a[9]; this->m[10] = a[10]; this->m[11] = a[11];
-	this->m[12] = a[12]; this->m[13] = a[13]; this->m[14] = a[14]; this->m[15] = a[15];
+    m[0] = a[0]; m[1] = a[1]; m[2] = a[2]; m[3] = a[3];
+    m[4] = a[4]; m[5] = a[5]; m[6] = a[6]; m[7] = a[7];
+    m[8] = a[8]; m[9] = a[9]; m[10] = a[10]; m[11] = a[11];
+    m[12] = a[12]; m[13] = a[13]; m[14] = a[14]; m[15] = a[15];
 }
 
 TZMatrix::TZMatrix(const float a11, const float a12, const float a13, const float a14,
-		  const float a21, const float a22, const float a23, const float a24,
-		  const float a31, const float a32, const float a33, const float a34,
-		  const float a41, const float a42, const float a43, const float a44)
+                   const float a21, const float a22, const float a23, const float a24,
+                   const float a31, const float a32, const float a33, const float a34,
+                   const float a41, const float a42, const float a43, const float a44)
 {
-	this->m[0] = a11; this->m[1] = a12; this->m[2] = a13; this->m[3] = a14;
-	this->m[4] = a21; this->m[5] = a22; this->m[6] = a23; this->m[7] = a24;	
-	this->m[8] = a31; this->m[9] = a32; this->m[10] = a33; this->m[11] = a34;
-	this->m[12] = a41; this->m[13] = a42; this->m[14] = a43; this->m[15] = a44;
+    m[0] = a11; m[1] = a12; m[2] = a13; m[3] = a14;
+    m[4] = a21; m[5] = a22; m[6] = a23; m[7] = a24;
+    m[8] = a31; m[9] = a32; m[10] = a33; m[11] = a34;
+    m[12] = a41; m[13] = a42; m[14] = a43; m[15] = a44;
 }
 
 
-TZMatrix::TZMatrix(const TZMatrix &matrix )
+TZMatrix::TZMatrix( const TZMatrix &matrix )
 {
-	this->m[0] = matrix.m[0]; this->m[1] = matrix.m[1]; this->m[2] = matrix.m[2]; this->m[3] = matrix.m[3];
-	this->m[4] = matrix.m[4]; this->m[5] = matrix.m[5]; this->m[6] = matrix.m[6]; this->m[7] = matrix.m[7];	
-	this->m[8] = matrix.m[8]; this->m[9] = matrix.m[9]; this->m[10] = matrix.m[10]; this->m[11] = matrix.m[11];
-	this->m[12] = matrix.m[12]; this->m[13] = matrix.m[13]; this->m[14] = matrix.m[14]; this->m[15] = matrix.m[15];
+    m[0] = matrix.m[0]; m[1] = matrix.m[1]; m[2] = matrix.m[2]; m[3] = matrix.m[3];
+    m[4] = matrix.m[4]; m[5] = matrix.m[5]; m[6] = matrix.m[6]; m[7] = matrix.m[7];
+    m[8] = matrix.m[8]; m[9] = matrix.m[9]; m[10] = matrix.m[10]; m[11] = matrix.m[11];
+    m[12] = matrix.m[12]; m[13] = matrix.m[13]; m[14] = matrix.m[14]; m[15] = matrix.m[15];
 }
 
 TZMatrix::~TZMatrix()
@@ -71,269 +70,245 @@ TZMatrix::~TZMatrix()
 
 
 
-
-
-bool TZMatrix::operator==( const TZMatrix &matrix ) const
-{
-	if( this->m[0] == matrix.m[0] && this->m[1] == matrix.m[1] && this->m[2] == matrix.m[2] && this->m[3] == matrix.m[3]         && 
-	    this->m[4] == matrix.m[4] && this->m[5] == matrix.m[5] && this->m[6] == matrix.m[6] && this->m[7] == matrix.m[7]         && 
-	    this->m[8] == matrix.m[8] && this->m[9] == matrix.m[9] && this->m[10] == matrix.m[10] && this->m[11] == matrix.m[11]     && 
-	    this->m[12] == matrix.m[12] && this->m[13] == matrix.m[13] && this->m[14] == matrix.m[14] && this->m[15] == matrix.m[15]   )
-	{
-		return true;
-	}
-	
-	return false;
-}
-
 void TZMatrix::operator+=( const TZMatrix &matrix )
 {
 	
-	this->m[0] += matrix.m[0]; this->m[1] += matrix.m[1]; this->m[2] += matrix.m[2]; this->m[3] += matrix.m[3]; 
-	this->m[4] += matrix.m[4]; this->m[5] += matrix.m[5]; this->m[6] += matrix.m[6]; this->m[7] += matrix.m[7]; 
-	this->m[8] += matrix.m[8]; this->m[9] += matrix.m[9]; this->m[10] += matrix.m[10]; this->m[11] += matrix.m[11]; 
-	this->m[12] += matrix.m[12]; this->m[13] += matrix.m[13]; this->m[14] += matrix.m[14]; this->m[15] += matrix.m[15];
+    m[0] += matrix.m[0]; m[1] += matrix.m[1]; m[2] += matrix.m[2]; m[3] += matrix.m[3];
+    m[4] += matrix.m[4]; m[5] += matrix.m[5]; m[6] += matrix.m[6]; m[7] += matrix.m[7];
+    m[8] += matrix.m[8]; m[9] += matrix.m[9]; m[10] += matrix.m[10]; m[11] += matrix.m[11];
+    m[12] += matrix.m[12]; m[13] += matrix.m[13]; m[14] += matrix.m[14]; m[15] += matrix.m[15];
 }
 
 TZMatrix TZMatrix::operator+( const TZMatrix &matrix ) const
 {
-	TZMatrix retMatrix;
+	TZMatrix ret;
 	
-	retMatrix.m[0] = this->m[0] + matrix.m[0]; retMatrix.m[1] = this->m[1] + matrix.m[1]; retMatrix.m[2] = this->m[2] + matrix.m[2]; retMatrix.m[3] = this->m[3] + matrix.m[3]; 
-	retMatrix.m[4] = this->m[4] + matrix.m[4]; retMatrix.m[5] = this->m[5] + matrix.m[5]; retMatrix.m[6] = this->m[6] + matrix.m[6]; retMatrix.m[7] = this->m[7] + matrix.m[7]; 
-	retMatrix.m[8] = this->m[8] + matrix.m[8]; retMatrix.m[9] = this->m[9] + matrix.m[9]; retMatrix.m[10] = this->m[10] + matrix.m[10]; retMatrix.m[11] = this->m[11] + matrix.m[11]; 
-	retMatrix.m[12] = this->m[12] + matrix.m[12]; retMatrix.m[13] = this->m[13] + matrix.m[13]; retMatrix.m[14] = this->m[14] + matrix.m[14]; retMatrix.m[15] = this->m[15] + matrix.m[15];
+	ret.m[0] = m[0] + matrix.m[0]; ret.m[1] = m[1] + matrix.m[1]; ret.m[2] = m[2] + matrix.m[2]; ret.m[3] = m[3] + matrix.m[3];
+	ret.m[4] = m[4] + matrix.m[4]; ret.m[5] = m[5] + matrix.m[5]; ret.m[6] = m[6] + matrix.m[6]; ret.m[7] = m[7] + matrix.m[7];
+	ret.m[8] = m[8] + matrix.m[8]; ret.m[9] = m[9] + matrix.m[9]; ret.m[10] = m[10] + matrix.m[10]; ret.m[11] = m[11] + matrix.m[11];
+	ret.m[12] = m[12] + matrix.m[12]; ret.m[13] = m[13] + matrix.m[13]; ret.m[14] = m[14] + matrix.m[14]; ret.m[15] = m[15] + matrix.m[15];
 	
-	return retMatrix;
+	return ret;
 }
 
 
 void TZMatrix::operator-=( const TZMatrix &matrix )
 {
 	
-	this->m[0] -= matrix.m[0]; this->m[1] -= matrix.m[1]; this->m[2] -= matrix.m[2]; this->m[3] -= matrix.m[3]; 
-	this->m[4] -= matrix.m[4]; this->m[5] -= matrix.m[5]; this->m[6] -= matrix.m[6]; this->m[7] -= matrix.m[7]; 
-	this->m[8] -= matrix.m[8]; this->m[9] -= matrix.m[9]; this->m[10] -= matrix.m[10]; this->m[11] -= matrix.m[11]; 
-	this->m[12] -= matrix.m[12]; this->m[13] -= matrix.m[13]; this->m[14] -= matrix.m[14]; this->m[15] -= matrix.m[15];
+    m[0] -= matrix.m[0]; m[1] -= matrix.m[1]; m[2] -= matrix.m[2]; m[3] -= matrix.m[3];
+    m[4] -= matrix.m[4]; m[5] -= matrix.m[5]; m[6] -= matrix.m[6]; m[7] -= matrix.m[7];
+    m[8] -= matrix.m[8]; m[9] -= matrix.m[9]; m[10] -= matrix.m[10]; m[11] -= matrix.m[11];
+    m[12] -= matrix.m[12]; m[13] -= matrix.m[13]; m[14] -= matrix.m[14]; m[15] -= matrix.m[15];
 }
 
 TZMatrix TZMatrix::operator-( const TZMatrix &matrix ) const
 {
-	TZMatrix retMatrix;
+	TZMatrix ret;
 	
-	retMatrix.m[0] = this->m[0] - matrix.m[0]; retMatrix.m[1] = this->m[1] - matrix.m[1]; retMatrix.m[2] = this->m[2] - matrix.m[2]; retMatrix.m[3] = this->m[3] - matrix.m[3]; 
-	retMatrix.m[4] = this->m[4] - matrix.m[4]; retMatrix.m[5] = this->m[5] - matrix.m[5]; retMatrix.m[6] = this->m[6] - matrix.m[6]; retMatrix.m[7] = this->m[7] - matrix.m[7]; 
-	retMatrix.m[8] = this->m[8] - matrix.m[8]; retMatrix.m[9] = this->m[9] - matrix.m[9]; retMatrix.m[10] = this->m[10] - matrix.m[10]; retMatrix.m[11] = this->m[11] - matrix.m[11]; 
-	retMatrix.m[12] = this->m[12] - matrix.m[12]; retMatrix.m[13] = this->m[13] - matrix.m[13]; retMatrix.m[14] = this->m[14] - matrix.m[14]; retMatrix.m[15] = this->m[15] - matrix.m[15];
+	ret.m[0] = m[0] - matrix.m[0]; ret.m[1] = m[1] - matrix.m[1]; ret.m[2] = m[2] - matrix.m[2]; ret.m[3] = m[3] - matrix.m[3];
+	ret.m[4] = m[4] - matrix.m[4]; ret.m[5] = m[5] - matrix.m[5]; ret.m[6] = m[6] - matrix.m[6]; ret.m[7] = m[7] - matrix.m[7];
+	ret.m[8] = m[8] - matrix.m[8]; ret.m[9] = m[9] - matrix.m[9]; ret.m[10] = m[10] - matrix.m[10]; ret.m[11] = m[11] - matrix.m[11];
+	ret.m[12] = m[12] - matrix.m[12]; ret.m[13] = m[13] - matrix.m[13]; ret.m[14] = m[14] - matrix.m[14]; ret.m[15] = m[15] - matrix.m[15];
 	
-	return retMatrix;
+	return ret;
 }
 
 
 void TZMatrix::operator*=( const float scala )
 {
-	this->m[0] *= scala; this->m[1] *= scala; this->m[2] *= scala; this->m[3] *= scala;
-	this->m[4] *= scala; this->m[5] *= scala; this->m[6] *= scala; this->m[7] *= scala;
-	this->m[8] *= scala; this->m[9] *= scala; this->m[10] *= scala; this->m[11] *= scala; 
-	this->m[12] *= scala; this->m[13] *= scala; this->m[14] *= scala; this->m[15] *= scala;
+    m[0] *= scala; m[1] *= scala; m[2] *= scala; m[3] *= scala;
+    m[4] *= scala; m[5] *= scala; m[6] *= scala; m[7] *= scala;
+    m[8] *= scala; m[9] *= scala; m[10] *= scala; m[11] *= scala;
+    m[12] *= scala; m[13] *= scala; m[14] *= scala; m[15] *= scala;
 }
 
 TZMatrix TZMatrix::operator*( const float scala ) const
 {
-	TZMatrix retMatrix;
+	TZMatrix ret;
 	
-	retMatrix.m[0] = this->m[0] * scala; retMatrix.m[1] = this->m[1] * scala; retMatrix.m[2] = this->m[2] * scala; retMatrix.m[3] = this->m[3] * scala;
-	retMatrix.m[4] = this->m[4] * scala; retMatrix.m[5] = this->m[5] * scala; retMatrix.m[6] = this->m[6] * scala; retMatrix.m[7] = this->m[7] * scala;
-	retMatrix.m[8] = this->m[8] * scala; retMatrix.m[9] = this->m[9] * scala; retMatrix.m[10] = this->m[10] * scala; retMatrix.m[11] = this->m[11] * scala; 
-	retMatrix.m[12] = this->m[12] * scala; retMatrix.m[13] = this->m[13] * scala; retMatrix.m[14] = this->m[14] * scala; retMatrix.m[15] = this->m[15] * scala;
+	ret.m[0] = m[0] * scala; ret.m[1] = m[1] * scala; ret.m[2] = m[2] * scala; ret.m[3] = m[3] * scala;
+	ret.m[4] = m[4] * scala; ret.m[5] = m[5] * scala; ret.m[6] = m[6] * scala; ret.m[7] = m[7] * scala;
+	ret.m[8] = m[8] * scala; ret.m[9] = m[9] * scala; ret.m[10] = m[10] * scala; ret.m[11] = m[11] * scala;
+	ret.m[12] = m[12] * scala; ret.m[13] = m[13] * scala; ret.m[14] = m[14] * scala; ret.m[15] = m[15] * scala;
 	
-	return retMatrix;
+	return ret;
 }
 
 void TZMatrix::operator*=( const TZMatrix &matrix )
 {
 	const TZMatrix tempMatrix = *this;
 	
-	this->m[0] = tempMatrix.m[0] * matrix.m[0] + tempMatrix.m[1] * matrix.m[4] + tempMatrix.m[2] * matrix.m[8] + tempMatrix.m[3] * matrix.m[12];
-	this->m[1] = tempMatrix.m[0] * matrix.m[1] + tempMatrix.m[1] * matrix.m[5] + tempMatrix.m[2] * matrix.m[9] + tempMatrix.m[3] * matrix.m[13];
-	this->m[2] = tempMatrix.m[0] * matrix.m[2] + tempMatrix.m[1] * matrix.m[6] + tempMatrix.m[2] * matrix.m[10] + tempMatrix.m[3] * matrix.m[14];
-	this->m[3] = tempMatrix.m[0] * matrix.m[3] + tempMatrix.m[1] * matrix.m[7] + tempMatrix.m[2] * matrix.m[11] + tempMatrix.m[3] * matrix.m[15];
+    m[0] = tempMatrix.m[0] * matrix.m[0] + tempMatrix.m[1] * matrix.m[4] + tempMatrix.m[2] * matrix.m[8] + tempMatrix.m[3] * matrix.m[12];
+    m[1] = tempMatrix.m[0] * matrix.m[1] + tempMatrix.m[1] * matrix.m[5] + tempMatrix.m[2] * matrix.m[9] + tempMatrix.m[3] * matrix.m[13];
+    m[2] = tempMatrix.m[0] * matrix.m[2] + tempMatrix.m[1] * matrix.m[6] + tempMatrix.m[2] * matrix.m[10] + tempMatrix.m[3] * matrix.m[14];
+    m[3] = tempMatrix.m[0] * matrix.m[3] + tempMatrix.m[1] * matrix.m[7] + tempMatrix.m[2] * matrix.m[11] + tempMatrix.m[3] * matrix.m[15];
 	
-	this->m[4] = tempMatrix.m[4] * matrix.m[0] + tempMatrix.m[5] * matrix.m[4] + tempMatrix.m[6] * matrix.m[8] + tempMatrix.m[7] * matrix.m[12];
-	this->m[5] = tempMatrix.m[4] * matrix.m[1] + tempMatrix.m[5] * matrix.m[5] + tempMatrix.m[6] * matrix.m[9] + tempMatrix.m[7] * matrix.m[13];
-	this->m[6] = tempMatrix.m[4] * matrix.m[2] + tempMatrix.m[5] * matrix.m[6] + tempMatrix.m[6] * matrix.m[10] + tempMatrix.m[7] * matrix.m[14];
-	this->m[7] = tempMatrix.m[4] * matrix.m[3] + tempMatrix.m[5] * matrix.m[7] + tempMatrix.m[6] * matrix.m[11] + tempMatrix.m[7] * matrix.m[15];
+    m[4] = tempMatrix.m[4] * matrix.m[0] + tempMatrix.m[5] * matrix.m[4] + tempMatrix.m[6] * matrix.m[8] + tempMatrix.m[7] * matrix.m[12];
+    m[5] = tempMatrix.m[4] * matrix.m[1] + tempMatrix.m[5] * matrix.m[5] + tempMatrix.m[6] * matrix.m[9] + tempMatrix.m[7] * matrix.m[13];
+    m[6] = tempMatrix.m[4] * matrix.m[2] + tempMatrix.m[5] * matrix.m[6] + tempMatrix.m[6] * matrix.m[10] + tempMatrix.m[7] * matrix.m[14];
+    m[7] = tempMatrix.m[4] * matrix.m[3] + tempMatrix.m[5] * matrix.m[7] + tempMatrix.m[6] * matrix.m[11] + tempMatrix.m[7] * matrix.m[15];
 	
-	this->m[8] = tempMatrix.m[8] * matrix.m[0] + tempMatrix.m[9] * matrix.m[4] + tempMatrix.m[10] * matrix.m[8] + tempMatrix.m[11] * matrix.m[12];
-	this->m[9] = tempMatrix.m[8] * matrix.m[1] + tempMatrix.m[9] * matrix.m[5] + tempMatrix.m[10] * matrix.m[9] + tempMatrix.m[11] * matrix.m[13];
-	this->m[10] = tempMatrix.m[8] * matrix.m[2] + tempMatrix.m[9] * matrix.m[6] + tempMatrix.m[10] * matrix.m[10] + tempMatrix.m[11] * matrix.m[14];
-	this->m[11] = tempMatrix.m[8] * matrix.m[3] + tempMatrix.m[9] * matrix.m[7] + tempMatrix.m[10] * matrix.m[11] + tempMatrix.m[11] * matrix.m[15];
+    m[8] = tempMatrix.m[8] * matrix.m[0] + tempMatrix.m[9] * matrix.m[4] + tempMatrix.m[10] * matrix.m[8] + tempMatrix.m[11] * matrix.m[12];
+    m[9] = tempMatrix.m[8] * matrix.m[1] + tempMatrix.m[9] * matrix.m[5] + tempMatrix.m[10] * matrix.m[9] + tempMatrix.m[11] * matrix.m[13];
+    m[10] = tempMatrix.m[8] * matrix.m[2] + tempMatrix.m[9] * matrix.m[6] + tempMatrix.m[10] * matrix.m[10] + tempMatrix.m[11] * matrix.m[14];
+    m[11] = tempMatrix.m[8] * matrix.m[3] + tempMatrix.m[9] * matrix.m[7] + tempMatrix.m[10] * matrix.m[11] + tempMatrix.m[11] * matrix.m[15];
 	
-	this->m[12] = tempMatrix.m[12] * matrix.m[0] + tempMatrix.m[13] * matrix.m[4] + tempMatrix.m[14] * matrix.m[8] + tempMatrix.m[15] * matrix.m[12];
-	this->m[13] = tempMatrix.m[12] * matrix.m[1] + tempMatrix.m[13] * matrix.m[5] + tempMatrix.m[14] * matrix.m[9] + tempMatrix.m[15] * matrix.m[13];
-	this->m[14] = tempMatrix.m[12] * matrix.m[2] + tempMatrix.m[13] * matrix.m[6] + tempMatrix.m[14] * matrix.m[10] + tempMatrix.m[15] * matrix.m[14];
-	this->m[15] = tempMatrix.m[12] * matrix.m[3] + tempMatrix.m[13] * matrix.m[7] + tempMatrix.m[14] * matrix.m[11] + tempMatrix.m[15] * matrix.m[15];
+    m[12] = tempMatrix.m[12] * matrix.m[0] + tempMatrix.m[13] * matrix.m[4] + tempMatrix.m[14] * matrix.m[8] + tempMatrix.m[15] * matrix.m[12];
+    m[13] = tempMatrix.m[12] * matrix.m[1] + tempMatrix.m[13] * matrix.m[5] + tempMatrix.m[14] * matrix.m[9] + tempMatrix.m[15] * matrix.m[13];
+    m[14] = tempMatrix.m[12] * matrix.m[2] + tempMatrix.m[13] * matrix.m[6] + tempMatrix.m[14] * matrix.m[10] + tempMatrix.m[15] * matrix.m[14];
+    m[15] = tempMatrix.m[12] * matrix.m[3] + tempMatrix.m[13] * matrix.m[7] + tempMatrix.m[14] * matrix.m[11] + tempMatrix.m[15] * matrix.m[15];
 }
 
 TZMatrix TZMatrix::operator*( const TZMatrix &matrix ) const
 {
-	TZMatrix retMatrix;
+	TZMatrix ret;
 	
-	retMatrix.m[0] = this->m[0] * matrix.m[0] + this->m[1] * matrix.m[4] + this->m[2] * matrix.m[8] + this->m[3] * matrix.m[12];
-	retMatrix.m[1] = this->m[0] * matrix.m[1] + this->m[1] * matrix.m[5] + this->m[2] * matrix.m[9] + this->m[3] * matrix.m[13];
-	retMatrix.m[2] = this->m[0] * matrix.m[2] + this->m[1] * matrix.m[6] + this->m[2] * matrix.m[10] + this->m[3] * matrix.m[14];
-	retMatrix.m[3] = this->m[0] * matrix.m[3] + this->m[1] * matrix.m[7] + this->m[2] * matrix.m[11] + this->m[3] * matrix.m[15];
+	ret.m[0] = m[0] * matrix.m[0] + m[1] * matrix.m[4] + m[2] * matrix.m[8] + m[3] * matrix.m[12];
+	ret.m[1] = m[0] * matrix.m[1] + m[1] * matrix.m[5] + m[2] * matrix.m[9] + m[3] * matrix.m[13];
+	ret.m[2] = m[0] * matrix.m[2] + m[1] * matrix.m[6] + m[2] * matrix.m[10] + m[3] * matrix.m[14];
+	ret.m[3] = m[0] * matrix.m[3] + m[1] * matrix.m[7] + m[2] * matrix.m[11] + m[3] * matrix.m[15];
 	
-	retMatrix.m[4] = this->m[4] * matrix.m[0] + this->m[5] * matrix.m[4] + this->m[6] * matrix.m[8] + this->m[7] * matrix.m[12];
-	retMatrix.m[5] = this->m[4] * matrix.m[1] + this->m[5] * matrix.m[5] + this->m[6] * matrix.m[9] + this->m[7] * matrix.m[13];
-	retMatrix.m[6] = this->m[4] * matrix.m[2] + this->m[5] * matrix.m[6] + this->m[6] * matrix.m[10] + this->m[7] * matrix.m[14];
-	retMatrix.m[7] = this->m[4] * matrix.m[3] + this->m[5] * matrix.m[7] + this->m[6] * matrix.m[11] + this->m[7] * matrix.m[15];
+	ret.m[4] = m[4] * matrix.m[0] + m[5] * matrix.m[4] + m[6] * matrix.m[8] + m[7] * matrix.m[12];
+	ret.m[5] = m[4] * matrix.m[1] + m[5] * matrix.m[5] + m[6] * matrix.m[9] + m[7] * matrix.m[13];
+	ret.m[6] = m[4] * matrix.m[2] + m[5] * matrix.m[6] + m[6] * matrix.m[10] + m[7] * matrix.m[14];
+	ret.m[7] = m[4] * matrix.m[3] + m[5] * matrix.m[7] + m[6] * matrix.m[11] + m[7] * matrix.m[15];
 	
-	retMatrix.m[8] = this->m[8] * matrix.m[0] + this->m[9] * matrix.m[4] + this->m[10] * matrix.m[8] + this->m[11] * matrix.m[12];
-	retMatrix.m[9] = this->m[8] * matrix.m[1] + this->m[9] * matrix.m[5] + this->m[10] * matrix.m[9] + this->m[11] * matrix.m[13];
-	retMatrix.m[10] = this->m[8] * matrix.m[2] + this->m[9] * matrix.m[6] + this->m[10] * matrix.m[10] + this->m[11] * matrix.m[14];
-	retMatrix.m[11] = this->m[8] * matrix.m[3] + this->m[9] * matrix.m[7] + this->m[10] * matrix.m[11] + this->m[11] * matrix.m[15];
+	ret.m[8] = m[8] * matrix.m[0] + m[9] * matrix.m[4] + m[10] * matrix.m[8] + m[11] * matrix.m[12];
+	ret.m[9] = m[8] * matrix.m[1] + m[9] * matrix.m[5] + m[10] * matrix.m[9] + m[11] * matrix.m[13];
+	ret.m[10] = m[8] * matrix.m[2] + m[9] * matrix.m[6] + m[10] * matrix.m[10] + m[11] * matrix.m[14];
+	ret.m[11] = m[8] * matrix.m[3] + m[9] * matrix.m[7] + m[10] * matrix.m[11] + m[11] * matrix.m[15];
 	
-	retMatrix.m[12] = this->m[12] * matrix.m[0] + this->m[13] * matrix.m[4] + this->m[14] * matrix.m[8] + this->m[15] * matrix.m[12];
-	retMatrix.m[13] = this->m[12] * matrix.m[1] + this->m[13] * matrix.m[5] + this->m[14] * matrix.m[9] + this->m[15] * matrix.m[13];
-	retMatrix.m[14] = this->m[12] * matrix.m[2] + this->m[13] * matrix.m[6] + this->m[14] * matrix.m[10] + this->m[15] * matrix.m[14];
-	retMatrix.m[15] = this->m[12] * matrix.m[3] + this->m[13] * matrix.m[7] + this->m[14] * matrix.m[11] + this->m[15] * matrix.m[15];
+	ret.m[12] = m[12] * matrix.m[0] + m[13] * matrix.m[4] + m[14] * matrix.m[8] + m[15] * matrix.m[12];
+	ret.m[13] = m[12] * matrix.m[1] + m[13] * matrix.m[5] + m[14] * matrix.m[9] + m[15] * matrix.m[13];
+	ret.m[14] = m[12] * matrix.m[2] + m[13] * matrix.m[6] + m[14] * matrix.m[10] + m[15] * matrix.m[14];
+	ret.m[15] = m[12] * matrix.m[3] + m[13] * matrix.m[7] + m[14] * matrix.m[11] + m[15] * matrix.m[15];
 	
-	return retMatrix;
+	return ret;
 }
 
 TZVector3D  TZMatrix::operator*( const TZVector3D &vector3D ) const
 {
 	TZVector3D retVector3D;
-	/* const int w = 1; */
+	/* const int w = 1.0f; */
 	
-	retVector3D.x = this->m[0] * vector3D.x + this->m[1] * vector3D.y + this->m[2] * vector3D.z + this->m[3]/* * w */;
-	retVector3D.y = this->m[4] * vector3D.x + this->m[5] * vector3D.y + this->m[6] * vector3D.z + this->m[7]/* * w */;
-	retVector3D.z = this->m[8] * vector3D.x + this->m[9] * vector3D.y + this->m[10] * vector3D.z + this->m[11]/* * w */;
+	retVector3D.x = m[0] * vector3D.x + m[1] * vector3D.y + m[2] * vector3D.z + m[3]/* * w */;
+	retVector3D.y = m[4] * vector3D.x + m[5] * vector3D.y + m[6] * vector3D.z + m[7]/* * w */;
+	retVector3D.z = m[8] * vector3D.x + m[9] * vector3D.y + m[10] * vector3D.z + m[11]/* * w */;
 	
 	return retVector3D;
 }
 
 void TZMatrix::operator/=( const float denominator )
 {
-	this->m[0] /= denominator; this->m[1] /= denominator; this->m[2] /= denominator; this->m[3] /= denominator;
-	this->m[4] /= denominator; this->m[5] /= denominator; this->m[6] /= denominator; this->m[7] /= denominator;
-	this->m[8] /= denominator; this->m[9] /= denominator; this->m[10] /= denominator; this->m[11] /= denominator; 
-	this->m[12] /= denominator; this->m[13] /= denominator; this->m[14] /= denominator; this->m[15] /= denominator;
+    m[0] /= denominator; m[1] /= denominator; m[2] /= denominator; m[3] /= denominator;
+    m[4] /= denominator; m[5] /= denominator; m[6] /= denominator; m[7] /= denominator;
+    m[8] /= denominator; m[9] /= denominator; m[10] /= denominator; m[11] /= denominator;
+    m[12] /= denominator; m[13] /= denominator; m[14] /= denominator; m[15] /= denominator;
 }
 
 TZMatrix TZMatrix::operator/( const float denominator ) const
 {
-	TZMatrix retMatrix;
+	TZMatrix ret;
 	
-	retMatrix.m[0] = this->m[0] / denominator; retMatrix.m[1] = this->m[1] / denominator; retMatrix.m[2] = this->m[2] / denominator; retMatrix.m[3] = this->m[3] / denominator;
-	retMatrix.m[4] = this->m[4] / denominator; retMatrix.m[5] = this->m[5] / denominator; retMatrix.m[6] = this->m[6] / denominator; retMatrix.m[7] = this->m[7] / denominator;
-	retMatrix.m[8] = this->m[8] / denominator; retMatrix.m[9] = this->m[9] / denominator; retMatrix.m[10] = this->m[10] / denominator; retMatrix.m[11] = this->m[11] / denominator; 
-	retMatrix.m[12] = this->m[12] / denominator; retMatrix.m[13] = this->m[13] / denominator; retMatrix.m[14] = this->m[14] / denominator; retMatrix.m[15] = this->m[15] / denominator;
+	ret.m[0] = m[0] / denominator; ret.m[1] = m[1] / denominator; ret.m[2] = m[2] / denominator; ret.m[3] = m[3] / denominator;
+	ret.m[4] = m[4] / denominator; ret.m[5] = m[5] / denominator; ret.m[6] = m[6] / denominator; ret.m[7] = m[7] / denominator;
+	ret.m[8] = m[8] / denominator; ret.m[9] = m[9] / denominator; ret.m[10] = m[10] / denominator; ret.m[11] = m[11] / denominator;
+	ret.m[12] = m[12] / denominator; ret.m[13] = m[13] / denominator; ret.m[14] = m[14] / denominator; ret.m[15] = m[15] / denominator;
 	
-	return retMatrix;
+	return ret;
 }
 
 float& TZMatrix::operator[]( const int index ) {
-	return this->m[index];
+	return m[index];
 }
 
 
-
-void TZMatrix::print( std::string tag )
+void TZMatrix::print( std::string tag ) const 
 {
-	std::cout << tag << " =" << std::endl;
-	std::cout << "| " << this->m[0] << " " << this->m[1] << " " << this->m[2] << " " << this->m[3] << " |" << std::endl;
-	std::cout << "| " << this->m[4] << " " << this->m[5] << " " << this->m[6] << " " << this->m[7] << " |" << std::endl;
-	std::cout << "| " << this->m[8] << " " << this->m[9] << " " << this->m[10] << " " << this->m[11] << " |" << std::endl;
-	std::cout << "| " << this->m[12] << " " << this->m[13] << " " << this->m[14] << " " << this->m[15] << " |" << std::endl;
+	printf("%s =\n", tag.c_str() );
+	printf("| %f %f %f %f |", m[0], m[1], m[2], m[3]);
+	printf("| %f %f %f %f |", m[4], m[5], m[6], m[7]);
+	printf("| %f %f %f %f |", m[8], m[9], m[10], m[11]);
+	printf("| %f %f %f %f |", m[12], m[13], m[14], m[15]);
 }
 
 
-void TZMatrix::loadIdentity()
+std::pair<bool,TZMatrix> TZMatrix::inverse() const
 {
-	this->m[0] = 1;	this->m[1] = 0;	this->m[2] = 0;	this->m[3] = 0;
-	this->m[4] = 0; this->m[5] = 1;	this->m[6] = 0;	this->m[7] = 0;
-	this->m[8] = 0;	this->m[9] = 0;	this->m[10] = 1; this->m[11] = 0;
-	this->m[12] = 0; this->m[13] = 0; this->m[14] = 0; this->m[15] = 1;
-}
-
-
-std::pair<bool,TZMatrix> TZMatrix::invert()
-{
-	float det = this->det();
+	float det = TZMatrix::det();
 	
 	if( det == 0.0 )
 	{
 		return std::pair<bool,TZMatrix>( false, TZMatrix(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0) );
 	}
 	
-	TZMatrix retMatrix;
+	TZMatrix ret;
 	
-	retMatrix.m[0]  = this->m[5] * this->m[10] * this->m[15]  +  this->m[6] * this->m[11] * this->m[13]  +  this->m[7] * this->m[9] * this->m[14]  -  this->m[5] * this->m[11] * this->m[14]  -  this->m[6] * this->m[9] * this->m[15]  -  this->m[7] * this->m[10] * this->m[13];
-	retMatrix.m[1]  = this->m[1] * this->m[11] * this->m[14]  +  this->m[2] * this->m[9] * this->m[15]  +  this->m[3] * this->m[10] * this->m[13]  -  this->m[1] * this->m[10] * this->m[15]  -  this->m[2] * this->m[11] * this->m[13]  -  this->m[3] * this->m[9] * this->m[14];
-	retMatrix.m[2]  = this->m[1] * this->m[6] * this->m[15]  +  this->m[2] * this->m[7] * this->m[13]  +  this->m[3] * this->m[5] * this->m[14]  -  this->m[1] * this->m[7] * this->m[14]  -  this->m[2] * this->m[5] * this->m[15]  -  this->m[3] * this->m[6] * this->m[13];
-	retMatrix.m[3]  = this->m[1] * this->m[7] * this->m[10]  +  this->m[2] * this->m[5] * this->m[11]  +  this->m[3] * this->m[6] * this->m[9]  -  this->m[1] * this->m[6] * this->m[11]  -  this->m[2] * this->m[7] * this->m[9]  -  this->m[3] * this->m[5] * this->m[10];
-	retMatrix.m[4]  = this->m[4] * this->m[11] * this->m[14]  +  this->m[6] * this->m[8] * this->m[15]  +  this->m[7] * this->m[10] * this->m[12]  -  this->m[4] * this->m[10] * this->m[15]  -  this->m[6] * this->m[11] * this->m[12]  -  this->m[7] * this->m[8] * this->m[14];
-	retMatrix.m[5]  = this->m[0] * this->m[10] * this->m[15]  +  this->m[2] * this->m[11] * this->m[12]  +  this->m[3] * this->m[8] * this->m[14]  -  this->m[0] * this->m[11] * this->m[14]  -  this->m[2] * this->m[8] * this->m[15]  -  this->m[3] * this->m[10] * this->m[12];
-	retMatrix.m[6]  = this->m[0] * this->m[7] * this->m[14]  +  this->m[2] * this->m[4] * this->m[15]  +  this->m[3] * this->m[6] * this->m[12]  -  this->m[0] * this->m[6] * this->m[15]  -  this->m[2] * this->m[7] * this->m[12]  -  this->m[3] * this->m[4] * this->m[14];
-	retMatrix.m[7]  = this->m[0] * this->m[6] * this->m[11]  +  this->m[2] * this->m[7] * this->m[8]  +  this->m[3] * this->m[4] * this->m[10]  -  this->m[0] * this->m[7] * this->m[10]  -  this->m[2] * this->m[4] * this->m[11]  -  this->m[3] * this->m[6] * this->m[8];
-	retMatrix.m[8]  = this->m[4] * this->m[9] * this->m[15]  +  this->m[5] * this->m[11] * this->m[12]  +  this->m[7] * this->m[8] * this->m[13]  -  this->m[4] * this->m[11] * this->m[13]  -  this->m[5] * this->m[8] * this->m[15]  -  this->m[7] * this->m[9] * this->m[12];
-	retMatrix.m[9]  = this->m[0] * this->m[11] * this->m[13]  +  this->m[1] * this->m[8] * this->m[15]  +  this->m[3] * this->m[9] * this->m[12]  -  this->m[0] * this->m[9] * this->m[15]  -  this->m[1] * this->m[11] * this->m[12]  -  this->m[3] * this->m[8] * this->m[13];
-	retMatrix.m[10] = this->m[0] * this->m[5] * this->m[15]  +  this->m[1] * this->m[7] * this->m[12]  +  this->m[3] * this->m[4] * this->m[13]  -  this->m[0] * this->m[7] * this->m[13]  -  this->m[1] * this->m[4] * this->m[15]  -  this->m[3] * this->m[5] * this->m[12];
-	retMatrix.m[11] = this->m[0] * this->m[7] * this->m[9]  +  this->m[1] * this->m[4] * this->m[11]  +  this->m[3] * this->m[5] * this->m[8]  -  this->m[0] * this->m[5] * this->m[11]  -  this->m[1] * this->m[7] * this->m[8]  -  this->m[3] * this->m[4] * this->m[9];
-	retMatrix.m[12] = this->m[4] * this->m[10] * this->m[13]  +  this->m[5] * this->m[8] * this->m[14]  +  this->m[6] * this->m[9] * this->m[12]  -  this->m[4] * this->m[9] * this->m[14]  -  this->m[5] * this->m[10] * this->m[12]  -  this->m[6] * this->m[8] * this->m[13];
-	retMatrix.m[13] = this->m[0] * this->m[9] * this->m[14]  +  this->m[1] * this->m[10] * this->m[12]  +  this->m[2] * this->m[8] * this->m[13]  -  this->m[0] * this->m[10] * this->m[13]  -  this->m[1] * this->m[8] * this->m[14]  -  this->m[2] * this->m[9] * this->m[12];
-	retMatrix.m[14] = this->m[0] * this->m[6] * this->m[13]  +  this->m[1] * this->m[4] * this->m[14]  +  this->m[2] * this->m[5] * this->m[12]  -  this->m[0] * this->m[5] * this->m[14]  -  this->m[1] * this->m[6] * this->m[12]  -  this->m[2] * this->m[4] * this->m[13];
-	retMatrix.m[15] = this->m[0] * this->m[5] * this->m[10]  +  this->m[1] * this->m[6] * this->m[8]  +  this->m[2] * this->m[4] * this->m[9]  -  this->m[0] * this->m[6] * this->m[9]  -  this->m[1] * this->m[4] * this->m[10]  -  this->m[2] * this->m[5] * this->m[8];
-	retMatrix = retMatrix * (1.0/det);
+	ret.m[0]  = m[5] * m[10] * m[15]  + m[6] * m[11] * m[13]  + m[7] * m[9] * m[14]  - m[5] * m[11] * m[14]  - m[6] * m[9] * m[15]  - m[7] * m[10] * m[13];
+	ret.m[1]  = m[1] * m[11] * m[14]  + m[2] * m[9] * m[15]  + m[3] * m[10] * m[13]  - m[1] * m[10] * m[15]  - m[2] * m[11] * m[13]  - m[3] * m[9] * m[14];
+	ret.m[2]  = m[1] * m[6] * m[15]  + m[2] * m[7] * m[13]  + m[3] * m[5] * m[14]  - m[1] * m[7] * m[14]  - m[2] * m[5] * m[15]  - m[3] * m[6] * m[13];
+	ret.m[3]  = m[1] * m[7] * m[10]  + m[2] * m[5] * m[11]  + m[3] * m[6] * m[9]  - m[1] * m[6] * m[11]  - m[2] * m[7] * m[9]  - m[3] * m[5] * m[10];
+	ret.m[4]  = m[4] * m[11] * m[14]  + m[6] * m[8] * m[15]  + m[7] * m[10] * m[12]  - m[4] * m[10] * m[15]  - m[6] * m[11] * m[12]  - m[7] * m[8] * m[14];
+	ret.m[5]  = m[0] * m[10] * m[15]  + m[2] * m[11] * m[12]  + m[3] * m[8] * m[14]  - m[0] * m[11] * m[14]  - m[2] * m[8] * m[15]  - m[3] * m[10] * m[12];
+	ret.m[6]  = m[0] * m[7] * m[14]  + m[2] * m[4] * m[15]  + m[3] * m[6] * m[12]  - m[0] * m[6] * m[15]  - m[2] * m[7] * m[12]  - m[3] * m[4] * m[14];
+	ret.m[7]  = m[0] * m[6] * m[11]  + m[2] * m[7] * m[8]  + m[3] * m[4] * m[10]  - m[0] * m[7] * m[10]  - m[2] * m[4] * m[11]  - m[3] * m[6] * m[8];
+	ret.m[8]  = m[4] * m[9] * m[15]  + m[5] * m[11] * m[12]  + m[7] * m[8] * m[13]  - m[4] * m[11] * m[13]  - m[5] * m[8] * m[15]  - m[7] * m[9] * m[12];
+	ret.m[9]  = m[0] * m[11] * m[13]  + m[1] * m[8] * m[15]  + m[3] * m[9] * m[12]  - m[0] * m[9] * m[15]  - m[1] * m[11] * m[12]  - m[3] * m[8] * m[13];
+	ret.m[10] = m[0] * m[5] * m[15]  + m[1] * m[7] * m[12]  + m[3] * m[4] * m[13]  - m[0] * m[7] * m[13]  - m[1] * m[4] * m[15]  - m[3] * m[5] * m[12];
+	ret.m[11] = m[0] * m[7] * m[9]  + m[1] * m[4] * m[11]  + m[3] * m[5] * m[8]  - m[0] * m[5] * m[11]  - m[1] * m[7] * m[8]  - m[3] * m[4] * m[9];
+	ret.m[12] = m[4] * m[10] * m[13]  + m[5] * m[8] * m[14]  + m[6] * m[9] * m[12]  - m[4] * m[9] * m[14]  - m[5] * m[10] * m[12]  - m[6] * m[8] * m[13];
+	ret.m[13] = m[0] * m[9] * m[14]  + m[1] * m[10] * m[12]  + m[2] * m[8] * m[13]  - m[0] * m[10] * m[13]  - m[1] * m[8] * m[14]  - m[2] * m[9] * m[12];
+	ret.m[14] = m[0] * m[6] * m[13]  + m[1] * m[4] * m[14]  + m[2] * m[5] * m[12]  - m[0] * m[5] * m[14]  - m[1] * m[6] * m[12]  - m[2] * m[4] * m[13];
+	ret.m[15] = m[0] * m[5] * m[10]  + m[1] * m[6] * m[8]  + m[2] * m[4] * m[9]  - m[0] * m[6] * m[9]  - m[1] * m[4] * m[10]  - m[2] * m[5] * m[8];
+	ret = ret * (1.0/det);
 	
-	return std::pair<bool,TZMatrix>( true, retMatrix );
+	return std::pair<bool,TZMatrix>( true, ret );
 }
 
 
-float TZMatrix::det()
+float TZMatrix::det() const
 {
 	float ret;
 	
-	ret =   this->m[0] * this->m[5] * this->m[10] * this->m[15]  +  this->m[0] * this->m[6] * this->m[11] * this->m[13]  +  this->m[0] * this->m[7] * this->m[9] * this->m[14]
-	      + this->m[1] * this->m[4] * this->m[11] * this->m[14]  +  this->m[1] * this->m[6] * this->m[8] * this->m[15]  +  this->m[1] * this->m[7] * this->m[10] * this->m[12]
-	      + this->m[2] * this->m[4] * this->m[9] * this->m[15]  +  this->m[2] * this->m[5] * this->m[11] * this->m[12]  +  this->m[2] * this->m[7] * this->m[8] * this->m[13]
-	      + this->m[3] * this->m[4] * this->m[10] * this->m[13]  +  this->m[3] * this->m[5] * this->m[8] * this->m[14]  +  this->m[3] * this->m[6] * this->m[9] * this->m[12]
-	      - this->m[0] * this->m[5] * this->m[11] * this->m[14]  -  this->m[0] * this->m[6] * this->m[9] * this->m[15]  -  this->m[0] * this->m[7] * this->m[10] * this->m[13]
-	      - this->m[1] * this->m[4] * this->m[10] * this->m[15]  -  this->m[1] * this->m[6] * this->m[11] * this->m[12]  -  this->m[1] * this->m[7] * this->m[8] * this->m[14]
-	      - this->m[2] * this->m[4] * this->m[11] * this->m[13]  -  this->m[2] * this->m[5] * this->m[8] * this->m[15]  -  this->m[2] * this->m[7] * this->m[9] * this->m[12]
-	      - this->m[3] * this->m[4] * this->m[9] * this->m[14]  -  this->m[3] * this->m[5] * this->m[10] * this->m[12]  -  this->m[3] * this->m[6] * this->m[8] * this->m[13]
-	      ;
+	ret =  m[0] * m[5] * m[10] * m[15]  + m[0] * m[6] * m[11] * m[13]  + m[0] * m[7] * m[9] * m[14]
+    + m[1] * m[4] * m[11] * m[14]  + m[1] * m[6] * m[8] * m[15]  + m[1] * m[7] * m[10] * m[12]
+    + m[2] * m[4] * m[9] * m[15]  + m[2] * m[5] * m[11] * m[12]  + m[2] * m[7] * m[8] * m[13]
+    + m[3] * m[4] * m[10] * m[13]  + m[3] * m[5] * m[8] * m[14]  + m[3] * m[6] * m[9] * m[12]
+    - m[0] * m[5] * m[11] * m[14]  - m[0] * m[6] * m[9] * m[15]  - m[0] * m[7] * m[10] * m[13]
+    - m[1] * m[4] * m[10] * m[15]  - m[1] * m[6] * m[11] * m[12]  - m[1] * m[7] * m[8] * m[14]
+    - m[2] * m[4] * m[11] * m[13]  - m[2] * m[5] * m[8] * m[15]  - m[2] * m[7] * m[9] * m[12]
+    - m[3] * m[4] * m[9] * m[14]  - m[3] * m[5] * m[10] * m[12]  - m[3] * m[6] * m[8] * m[13]
+    ;
 	
 	return ret;
 }
 
 
-void TZMatrix::transpose()
+TZMatrix TZMatrix::transposed() const
 {
-	TZMatrix tempMatrix(*this);
+	TZMatrix ret;
 	
-	/*this->m[0] = tempMatrix.m[0];*/
-	this->m[1] = tempMatrix.m[4];
-	this->m[2] = tempMatrix.m[8];
-	this->m[3] = tempMatrix.m[12];
+	/*ret.m[0] = m[0];*/
+    ret.m[1] = m[4];
+    ret.m[2] = m[8];
+    ret.m[3] = m[12];
 	
-	this->m[4] = tempMatrix.m[1];
-	//this->m[5] = tempMatrix.m[5];
-	this->m[6] = tempMatrix.m[9];
-	this->m[7] = tempMatrix.m[13];
+    ret.m[4] = m[1];
+	//ret.m[5] = m[5];
+    ret.m[6] = m[9];
+    ret.m[7] = m[13];
 	
-	this->m[8] = tempMatrix.m[2];
-	this->m[9] = tempMatrix.m[6];
-	//this->m[10] = tempMatrix.m[10];
-	this->m[11] = tempMatrix.m[14];
+    ret.m[8] = m[2];
+    ret.m[9] = m[6];
+	//ret.m[10] = m[10];
+    ret.m[11] = m[14];
 	
-	this->m[12] = tempMatrix.m[3];
-	this->m[13] = tempMatrix.m[7];
-	this->m[14] = tempMatrix.m[11];
-	//this->m[15] = tempMatrix.m[15];
+    ret.m[12] = m[3];
+    ret.m[13] = m[7];
+    ret.m[14] = m[11];
+	//ret.m[15] = m[15];
 	
+    return ret;
 }
 
 
@@ -341,38 +316,66 @@ void TZMatrix::transpose()
 
 void TZMatrix::scale( const float scale_xyz )
 {
-	this->m[0] *= scale_xyz;
-	this->m[5] *= scale_xyz;
-	this->m[10] *= scale_xyz;
+    m[0] *= scale_xyz;
+    m[5] *= scale_xyz;
+    m[10] *= scale_xyz;
 }
 void TZMatrix::scale( const float scale_x, const float scale_y, const float scale_z )
 {
-	this->m[0] *= scale_x;
-	this->m[5] *= scale_y;
-	this->m[10] *= scale_z;	
+    m[0] *= scale_x;
+    m[5] *= scale_y;
+    m[10] *= scale_z;
 }
 
 
 void TZMatrix::translate( TZVector3D &positionVec )
 {
-	this->m[3] += positionVec.x;
-	this->m[7] += positionVec.y;
-	this->m[11] += positionVec.z;
+    m[3] += positionVec.x;
+    m[7] += positionVec.y;
+    m[11] += positionVec.z;
 }
 
 void TZMatrix::axisRotate( const float angle_degree, TZVector3D &axis )
 {
 	/*
-	TZQuaternion q(0,0,0,1);
-	q.axisRotate( angle_degree, axis );
+     TZQuaternion q(0,0,0,1);
+     q.axisRotate( angle_degree, axis );
 	 */
 	float half_radian = degree2radian(angle_degree * 0.5);
-	TZQuaternion q( cos(half_radian), axis.unitTZVector3D() * sin(half_radian) );
-
+	TZQuaternion q( cos(half_radian), axis.unit() * sin(half_radian) );
+    
 	*this *= q.toMatrix();
 }
 
 
+
+TZMatrix TZMatrix::Unit()
+{
+    TZMatrix ret;
+    ret[0]  = 1.0f; ret[1]  = 0.0f; ret[2]  = 0.0f; ret[3]  = 0.0f;
+    ret[4]  = 0.0f; ret[5]  = 1.0f; ret[6]  = 0.0f; ret[7]  = 0.0f;
+    ret[8]  = 0.0f; ret[9]  = 0.0f; ret[10] = 1.0f; ret[11] = 0.0f;
+    ret[12] = 0.0f; ret[13] = 0.0f; ret[14] = 0.0f; ret[15] = 1.0f;
+    return ret;
+}
+
+
+TZMatrix TZMatrix::Scale( const float scale_xyz )
+{
+    TZMatrix ret;
+    ret.m[0] *= scale_xyz;
+    ret.m[5] *= scale_xyz;
+    ret.m[10] *= scale_xyz;
+    return ret;
+}
+TZMatrix TZMatrix::Scale( const float scale_x, const float scale_y, const float scale_z )
+{
+    TZMatrix ret;
+    ret.m[0] *= scale_x;
+    ret.m[5] *= scale_y;
+    ret.m[10] *= scale_z;
+    return ret;
+}
 
 TZMatrix TZMatrix::Translate( TZVector3D positionVec ) {
     TZMatrix ret;
@@ -385,7 +388,7 @@ TZMatrix TZMatrix::Translate( TZVector3D positionVec ) {
 TZMatrix TZMatrix::AxisRotate( const float angle_degree, TZVector3D axis ) {
     TZMatrix ret;
 	float half_radian = degree2radian(angle_degree * 0.5);
-	TZQuaternion q( cos(half_radian), axis.unitVector3D() * sin(half_radian) );
+	TZQuaternion q( cos(half_radian), axis.unit() * sin(half_radian) );
 	ret *= q.toMatrix();
     return ret;
 }

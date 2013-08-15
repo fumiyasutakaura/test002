@@ -8,23 +8,29 @@
  */
 
 #include "TZVector.hpp"
-#include <iostream>
 #include <math.h>
 
 using namespace TZulu;
 
 TZVector3D::TZVector3D()
 {
-	this->x = 0.0;
-	this->y = 0.0;
-	this->z = 0.0;
+	x = 0.0;
+	y = 0.0;
+	z = 0.0;
 }
 
 TZVector3D::TZVector3D( const float arg_x, const float arg_y , const float arg_z )
 {
-	this->x = arg_x;
-	this->y = arg_y;
-	this->z = arg_z;
+	x = arg_x;
+	y = arg_y;
+	z = arg_z;
+}
+
+TZVector3D::TZVector3D( const TZVector3D& v )
+{
+    x = v.x;
+    y = v.y;
+    z = v.z;
 }
 
 TZVector3D::~TZVector3D()
@@ -32,99 +38,75 @@ TZVector3D::~TZVector3D()
 	
 }
 
-
-
-void TZVector3D::printTZVector3D()
-{
-	std::cout << "TZVector3D( " << this->x << ", " << this->y << ", " << this->z << " )" << std::endl;
-}
-
-
 void TZVector3D::operator=( const TZVector3D &vector3D )
 {
-	this->x = vector3D.x;
-	this->y = vector3D.y;
-	this->z = vector3D.z;
+	x = vector3D.x;
+	y = vector3D.y;
+	z = vector3D.z;
 }
 
 TZVector3D TZVector3D::operator+( const TZVector3D &vector3D ) const
 {
-	return TZVector3D( this->x + vector3D.x, this->y + vector3D.y, this->z + vector3D.z );	
+	return TZVector3D( x + vector3D.x, y + vector3D.y, z + vector3D.z );	
 }
 
 void TZVector3D::operator+=( const TZVector3D &vector3D )
 {
-	this->x += vector3D.x;
-	this->y += vector3D.y;
-	this->z += vector3D.z;
+	x += vector3D.x;
+	y += vector3D.y;
+	z += vector3D.z;
 }
 
 TZVector3D TZVector3D::operator-( const TZVector3D &vector3D ) const
 {
-	return TZVector3D( this->x - vector3D.x, this->y - vector3D.y, this->z - vector3D.z );
+	return TZVector3D( x - vector3D.x, y - vector3D.y, z - vector3D.z );
 }
 
 void TZVector3D::operator-=( const TZVector3D &vector3D )
 {
-	this->x -= vector3D.x;
-	this->y -= vector3D.y;
-	this->z -= vector3D.z;
+	x -= vector3D.x;
+	y -= vector3D.y;
+	z -= vector3D.z;
 }
 
 TZVector3D TZVector3D::operator*( const float scale ) const
 {
-	return TZVector3D( this->x * scale, this->y * scale, this->z * scale );
+	return TZVector3D( x * scale, y * scale, z * scale );
 }
 
 TZVector3D TZVector3D::operator/( const float denominator ) const
 {
-	return TZVector3D( this->x / denominator, this->y / denominator, this->z / denominator );
-}
-
-bool TZVector3D::operator==( const TZVector3D &vector3D ) const
-{
-	return (this->x == vector3D.x  &&  this->y == vector3D.y  &&  this->z == vector3D.z);
+	return TZVector3D( x / denominator, y / denominator, z / denominator );
 }
 
 float& TZVector3D::operator[](int index) {
-	return this->v[index];
+	return v[index];
 }
 
-void TZVector3D::print( std::string tag )
+void TZVector3D::print( std::string tag ) const
 {
-	std::cout << tag << "(" << this->x << "," << this->y << "," << this->z << ")" << std::endl;
+	printf("%s(%f, %f, %f)\n", tag.c_str(), x, y, z);
 }
 
-float TZVector3D::vectorLength()
+float TZVector3D::length() const
 {
-	return sqrt( this->x * this->x + this->y * this->y + this->z * this->z );
+	return sqrt( x * x + y * y + z * z );
 }
 
-TZVector3D TZVector3D::unitTZVector3D()
+TZVector3D TZVector3D::unit() const
 {
-	return *this / sqrt( this->x * this->x + this->y * this->y + this->z * this->z );
+	return *this / sqrt( x * x + y * y + z * z );
 }
-
-void TZVector3D::makeUnit()
-{
-	float denominator = sqrt( this->x * this->x + this->y * this->y + this->z * this->z );
-
-	this->x /= denominator;
-	this->y /= denominator;
-	this->z /= denominator;
-	
-}
-
 
 float TZVector3D::dot( const TZVector3D &vector3D ) const
 {
-	return this->x * vector3D.x + this->y * vector3D.y + this->z * vector3D.z;
+	return x * vector3D.x + y * vector3D.y + z * vector3D.z;
 }
 
 
 TZVector3D TZVector3D::cross( const TZVector3D &vector3D ) const
 {
-	return TZVector3D(this->y * vector3D.z - this->z * vector3D.y,
-					this->z * vector3D.x - this->x * vector3D.z,
-					this->x * vector3D.y - this->y * vector3D.x );
+	return TZVector3D(y * vector3D.z - z * vector3D.y,
+					  z * vector3D.x - x * vector3D.z,
+					  x * vector3D.y - y * vector3D.x );
 }

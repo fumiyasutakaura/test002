@@ -238,7 +238,7 @@ TZQuaternion TZQuaternion::unit()
 void TZQuaternion::axisRotate( const float angle_degree, TZVector3D &axis )
 {
 	float half_angle_radian = degree2radian( angle_degree ) * 0.5f;
-	TZVector3D unitAxis = axis.unitTZVector3D();
+	TZVector3D unitAxis = axis.unit();
 	
 	TZQuaternion q      = TZQuaternion( cos(half_angle_radian), unitAxis * sin(half_angle_radian) );
 	//TZQuaternion q_conj = TZQuaternion( cos(half_angle_radian), unitAxis * (-sin(half_angle_radian)) );
@@ -280,7 +280,7 @@ TZMatrix TZQuaternion::toRotationMatrix()
 	TZMatrix retMatrix;
 	
 	float half_angle_radian = degree2radian( this->w ) * 0.5f;
-	TZVector3D unitAxis = TZVector3D(this->x,this->y,this->z).unitTZVector3D();
+	TZVector3D unitAxis = TZVector3D(this->x,this->y,this->z).unit();
 	
 	TZQuaternion unitQ = TZQuaternion( cos(half_angle_radian), unitAxis * sin(half_angle_radian) );
 	
@@ -311,5 +311,5 @@ TZMatrix TZQuaternion::toRotationMatrix()
 void TZQuaternion::slerp( TZVector3D start, TZVector3D end, const float t_0to1 )
 {
 	TZVector3D normalV = start.cross(end);
-	this->axisRotate( radian2degree(t_0to1*acos(start.dot(end)/(start.vectorLength()*end.vectorLength()))), normalV );
+	this->axisRotate( radian2degree(t_0to1*acos(start.dot(end)/(start.length()*end.length()))), normalV );
 }
