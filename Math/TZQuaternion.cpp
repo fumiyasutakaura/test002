@@ -191,7 +191,7 @@ void TZQuaternion::print( std::string tag )
 
 
 
-std::pair<bool,TZQuaternion> TZQuaternion::invert()
+std::pair<bool,TZQuaternion> TZQuaternion::inverse()
 {
 	float square_norm = this->squareNorm();
 	

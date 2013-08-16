@@ -51,7 +51,7 @@ namespace TZulu {
         void print( std::string tag );
         
         // 逆クオータニオン
-        std::pair<bool,TZQuaternion> invert();
+        std::pair<bool,TZQuaternion> inverse();
         // 共役クオータニオン
         TZQuaternion conjugate();
         // ノルムの2乗
