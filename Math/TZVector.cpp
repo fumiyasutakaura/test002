@@ -14,9 +14,9 @@ using namespace TZulu;
 
 TZVector3D::TZVector3D()
 {
-	x = 0.0;
-	y = 0.0;
-	z = 0.0;
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
 }
 
 TZVector3D::TZVector3D( const float arg_x, const float arg_y , const float arg_z )

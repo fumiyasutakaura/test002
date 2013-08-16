@@ -250,61 +250,61 @@ void TZQuaternion::axisRotate( const float angle_degree, TZVector3D &axis )
 
 TZMatrix TZQuaternion::toMatrix()
 {
-	TZMatrix retMatrix;
+	TZMatrix ret;
 	
-	retMatrix.m[0] = 1-2*( this->y * this->y  +  this->z * this->z );
-	retMatrix.m[1] = 2*( this->x * this->y  -  this->w * this->z );
-	retMatrix.m[2] = 2*( this->x * this->z  +  this->w * this->y );
-	retMatrix.m[3] = 0;
+	ret.m[0] = 1-2*( this->y * this->y  +  this->z * this->z );
+	ret.m[1] = 2*( this->x * this->y  -  this->w * this->z );
+	ret.m[2] = 2*( this->x * this->z  +  this->w * this->y );
+	ret.m[3] = 0;
 	
-	retMatrix.m[4] = 2*( this->x * this->y  +  this->w * this->z );
-	retMatrix.m[5] = 1-2*( this->x * this->x  +  this->z * this->z );
-	retMatrix.m[6] = 2*( this->y * this->z  -  this->w * this->x );
-	retMatrix.m[7] = 0;
+	ret.m[4] = 2*( this->x * this->y  +  this->w * this->z );
+	ret.m[5] = 1-2*( this->x * this->x  +  this->z * this->z );
+	ret.m[6] = 2*( this->y * this->z  -  this->w * this->x );
+	ret.m[7] = 0;
 	
-	retMatrix.m[8] = 2*( this->x * this->z  -  this->w * this->y );
-	retMatrix.m[9] = 2*( this->y * this->z  +  this->w * this->x );
-	retMatrix.m[10] = 1-2*( this->x * this->x  +  this->y * this->y );
-	retMatrix.m[11] = 0;
+	ret.m[8] = 2*( this->x * this->z  -  this->w * this->y );
+	ret.m[9] = 2*( this->y * this->z  +  this->w * this->x );
+	ret.m[10] = 1-2*( this->x * this->x  +  this->y * this->y );
+	ret.m[11] = 0;
 	
-	retMatrix.m[12] = 0;
-	retMatrix.m[13] = 0;
-	retMatrix.m[14] = 0;
-	retMatrix.m[15] = 1;
+	ret.m[12] = 0;
+	ret.m[13] = 0;
+	ret.m[14] = 0;
+	ret.m[15] = 1;
 	
-	return retMatrix;
+	return ret;
 }
 
 TZMatrix TZQuaternion::toRotationMatrix()
 {
-	TZMatrix retMatrix;
+	TZMatrix ret;
 	
 	float half_angle_radian = degree2radian( this->w ) * 0.5f;
 	TZVector3D unitAxis = TZVector3D(this->x,this->y,this->z).unit();
 	
 	TZQuaternion unitQ = TZQuaternion( cos(half_angle_radian), unitAxis * sin(half_angle_radian) );
 	
-	retMatrix.m[0] = 1.0f-2.0f*( unitQ.y * unitQ.y  +  unitQ.z * unitQ.z );
-	retMatrix.m[1] = 2.0f*( unitQ.x * unitQ.y  -  unitQ.w * unitQ.z );
-	retMatrix.m[2] = 2.0f*( unitQ.x * unitQ.z  +  unitQ.w * unitQ.y );
-	retMatrix.m[3] = 0.0f;
+	ret.m[0] = 1.0f-2.0f*( unitQ.y * unitQ.y  +  unitQ.z * unitQ.z );
+	ret.m[1] = 2.0f*( unitQ.x * unitQ.y  -  unitQ.w * unitQ.z );
+	ret.m[2] = 2.0f*( unitQ.x * unitQ.z  +  unitQ.w * unitQ.y );
+	ret.m[3] = 0.0f;
 	
-	retMatrix.m[4] = 2.0f*( unitQ.x * unitQ.y  +  unitQ.w * unitQ.z );
-	retMatrix.m[5] = 1.0f-2.0f*( unitQ.x * unitQ.x  +  unitQ.z * unitQ.z );
-	retMatrix.m[6] = 2.0f*( unitQ.y * unitQ.z  -  unitQ.w * unitQ.x );
-	retMatrix.m[7] = 0.0f;
+	ret.m[4] = 2.0f*( unitQ.x * unitQ.y  +  unitQ.w * unitQ.z );
+	ret.m[5] = 1.0f-2.0f*( unitQ.x * unitQ.x  +  unitQ.z * unitQ.z );
+	ret.m[6] = 2.0f*( unitQ.y * unitQ.z  -  unitQ.w * unitQ.x );
+	ret.m[7] = 0.0f;
 	
-	retMatrix.m[8] = 2.0f*( unitQ.x * unitQ.z  -  unitQ.w * unitQ.y );
-	retMatrix.m[9] = 2.0f*( unitQ.y * unitQ.z  +  unitQ.w * unitQ.x );
-	retMatrix.m[10] = 1.0f-2.0f*( unitQ.x * unitQ.x  +  unitQ.y * unitQ.y );
-	retMatrix.m[11] = 0.0f;
+	ret.m[8] = 2.0f*( unitQ.x * unitQ.z  -  unitQ.w * unitQ.y );
+	ret.m[9] = 2.0f*( unitQ.y * unitQ.z  +  unitQ.w * unitQ.x );
+	ret.m[10] = 1.0f-2.0f*( unitQ.x * unitQ.x  +  unitQ.y * unitQ.y );
+	ret.m[11] = 0.0f;
 	
-	retMatrix.m[12] = 0.0f;
-	retMatrix.m[13] = 0.0f;
-	retMatrix.m[14] = 0.0f;
-	retMatrix.m[15] = 1.0f;
+	ret.m[12] = 0.0f;
+	ret.m[13] = 0.0f;
+	ret.m[14] = 0.0f;
+	ret.m[15] = 1.0f;
 	
-	return retMatrix;
+	return ret;
 }
 
 
